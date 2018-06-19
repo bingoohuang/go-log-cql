@@ -5,39 +5,20 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
     <title>Go Log Cql</title>
     <style>
-        #logId {
-            width: 300px;
-        }
-
         .keySpan {
             color: blue;
         }
-
-        #header {
-            margin-top: 20px;
-            margin-left: 20px;
-        }
-
-        #summary {
-            display: none;
-        }
-
-        .error {
-            color: red;
-        }
-
     </style>
 </head>
 <body>
 
 <div style="text-align:center;white-space:nowrap;">
-    LogId:&nbsp;<input type="text" id="logId" value="<LogId/>">
+    LogId:&nbsp;<input type="text" id="logId" style="width: 300px" value="<LogId/>">
 </div>
 
-
-<div id="header">
-    <span class="error"><Error/></span>
-    <div id="summary">
+<div style="margin-top:20px;margin-left: 20px;">
+    <span style="color:red"><Error/></span>
+    <div id="summary" style="display: none">
         <span><span class="keySpan">LogId:</span><LogId/></span>
         <span><span class="keySpan">Hostname:</span><Hostname/></span>
         <span><span class="keySpan">Logger:</span><Logger/></span>
@@ -45,27 +26,22 @@
         <span><span class="keySpan">Tid:</span><Tid/></span>
         <span><span class="keySpan">Timestamp:</span><Timestamp/></span>
     </div>
-    <pre><ContextLogs/></pre>
+    <pre style="white-space: pre-wrap; word-wrap: break-word"><ContextLogs/></pre>
 </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    var contextPath = '${contextPath}';
+    $(function () {
+        $('#logId').keydown(function (e) {
+            if ((e.keyCode || e.which) == 13) {
+                window.location = "${contextPath}/" + $(this).val()
+            }
+        })
 
-    function locationLog(logId) {
-        window.location = contextPath + "/" + logId
-    }
-
-    $('#logId').keydown(function (event) {
-        var keyCode = event.keyCode || event.which
-        if (keyCode == 13) {
-            locationLog($(this).val())
+        if ($('#logId').val() !== '') {
+            $('#summary').show()
         }
     })
-
-    if ($('#logId').val() !== '') {
-        $('#summary').show()
-    }
 </script>
 
 </html>
