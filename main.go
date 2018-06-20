@@ -23,7 +23,7 @@ var (
 
 func init() {
 	contextPath = flag.String("contextPath", "", "context path")
-	cassandraCluster = flag.String("cassandraCluster", "127.0.0.1:9042", "cassandra cluster, like: 192.168.0.1:9042 192.168.0.2:9042,")
+	cassandraCluster = flag.String("cassandraCluster", "127.0.0.1:9042", "cassandra cluster, like: 192.168.0.1:9042 192.168.0.2:9042")
 	httpPortArg := flag.Int("port", 7679, "Port to serve.")
 	devMode = flag.Bool("devMode", false, "devMode(disable js/css minify)")
 
@@ -59,7 +59,7 @@ func handleFunc(r *mux.Router, path string, f func(http.ResponseWriter, *http.Re
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
-	textHtml(w)
+	go_utils.HeadContentTypeHtml(w)
 
 	index := string(MustAsset("res/index.html"))
 	index = strings.Replace(index, "${contextPath}", *contextPath, -1)
@@ -72,7 +72,7 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveLog(w http.ResponseWriter, r *http.Request) {
-	textHtml(w)
+	go_utils.HeadContentTypeHtml(w)
 
 	vars := mux.Vars(r)
 	logid := vars["logid"]
@@ -94,10 +94,6 @@ func serveLog(w http.ResponseWriter, r *http.Request) {
 
 	index = go_utils.MinifyHtml(index, true)
 	w.Write([]byte(index))
-}
-
-func textHtml(w http.ResponseWriter) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 }
 
 func replaceIndex(index string, log *EventLogException) string {

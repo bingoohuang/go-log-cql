@@ -15,3 +15,4 @@
 vendor
 go-log-cql
 bindata.go
+*.bin.bz2

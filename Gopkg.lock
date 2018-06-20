@@ -5,7 +5,7 @@
   branch = "master"
   name = "github.com/bingoohuang/go-utils"
   packages = ["."]
-  revision = "f3b63d8bc5d4a082c0958002eedbd5609d3f664c"
+  revision = "4847ea2778fe4c9424aed9b4d461f6180827d34c"
 
 [[projects]]
   branch = "master"
